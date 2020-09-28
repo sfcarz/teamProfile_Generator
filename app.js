@@ -15,9 +15,8 @@ const team = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-async function generator() {
-    console.log('Starting a new descriptive adventure!');
-
+const generator = () => {
+    console.log('Adding Team Member Info');
     inquirer.prompt([
             {
                 name: 'memberInfo',
@@ -25,22 +24,17 @@ async function generator() {
                 choices: ['Manager', 'Engineer', 'Intern'],
                 message: 'What are you?'
             },
-            {
-                type: 'input',
-                message: 'What is your Email',
-                name: 'memberEmail'
-            },
     ]).then(answer => {
-            console.log(answer);
+            // console.log(answer);
             switch (answer.memberInfo) {
                 case 'Manager':
-                    managerMenu();
+                    confirmManager();
                     break;
                 case 'Engineer':
-                    engineerMenu();
+                    confirmEngineer();
                     break;
                 case 'Intern':
-                    internMenu();
+                    confirmIntern();
                     break;
                 default:
                     return;
@@ -48,22 +42,25 @@ async function generator() {
         })
 }
 
-const managerMenu = () => {
-    console.log('Manager Menu Work');
+const confirmManager = () => {
+    console.log('Manager Menu');
     inquirer.prompt([
         {
             name: 'managerAction',
             type: 'list',
-            choices: ['Create Manager'],
-            message: 'Choose Manager Action'
+            choices: ['Yes', 'No'],
+            message: 'What are you?'
         }
     ]).then(answer => {
+        console.log(answer.managerAction);
         switch (answer.managerAction) {
-            case 'Create Manager':
+            case 'Yes':
                 createManager();
-
-        }
-    })
+                break;
+            default:
+                generator();
+        };
+    });
 };
 
 const createManager = () => inquirer.prompt([
@@ -89,12 +86,108 @@ const createManager = () => inquirer.prompt([
     },
 ]).then(answer => {
     const newManager = new Manager(answer.managerName, answer.managerId, answer.managerEmail, answer.managerOfficeNumber)
-
-    team.push(newManager)
-
-    console.log(newManager);
+    team.push(newManager);
+    // console.log(newManager);
+    // console.log(team);
     }
 )
+
+const confirmEngineer = () => {
+    console.log('Engineer Menu');
+    inquirer.prompt([
+        {
+            name: 'engineerAction',
+            type: 'list',
+            choices: ['Yes', 'No'],
+            message: 'Create Engineer?'
+        }
+    ]).then(answer => {
+        switch (answer.engineerAction) {
+            case 'Yes':
+                createEngineer();
+                break;
+            default:
+                generator();
+        }
+    })
+};
+
+const createEngineer = () => inquirer.prompt([
+    {
+        type: 'input',
+        message: 'What is your Name',
+        name: 'engineerName'
+    },
+    {
+        type: 'input',
+        message: 'What is your id',
+        name: 'engineerId'
+    },
+    {
+        type: 'input',
+        message: 'What is your Email',
+        name: 'engineerEmail'
+    },
+    {
+        type: 'input',
+        message: 'What is your Git Hub User Name',
+        name: 'gitHubUser'
+    },
+]).then(answer => {
+    const newEngineer = new Engineer(answer.engineerName, answer.engineerId, answer.engineerEmail, answer.gitHubUser)
+    team.push(newEngineer);
+    // console.log(newManager);
+}
+)
+
+const confirmIntern = () => {
+    console.log('Intern Menu');
+    inquirer.prompt([
+        {
+            name: 'internAction',
+            type: 'list',
+            choices: ['Yes', 'No'],
+            message: 'Create intern?'
+        }
+    ]).then(answer => {
+        switch (answer.internAction) {
+            case 'Yes':
+                createIntern();
+                break;
+            default:
+                generator();
+        }
+    })
+};
+
+const createIntern = () => inquirer.prompt([
+    {
+        type: 'input',
+        message: 'What is your Name',
+        name: 'internName'
+    },
+    {
+        type: 'input',
+        message: 'What is your id',
+        name: 'internId'
+    },
+    {
+        type: 'input',
+        message: 'What is your Email',
+        name: 'internEmail'
+    },
+    {
+        type: 'input',
+        message: 'What school did you attend',
+        name: 'internSchool'
+    },
+]).then(answer => {
+    const newIntern = new Intern(answer.internName, answer.internId, answer.internEmail, answer.internSchool)
+    team.push(newIntern);
+    // console.log(newManager);
+}
+)
+
 
 generator();
 
