@@ -230,7 +230,7 @@ const team = [];
                 generator();
                 break;
             default:
-                console.log(render(team));
+                // console.log(render(team));
 
                 const writeResult = fs.writeFileSync(path.join(__dirname, '/output', 'myTeam.html'),
                     render(team));

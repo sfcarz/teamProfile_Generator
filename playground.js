@@ -8,3 +8,5 @@ const steve = {
         this.email.salary + 100
     }
 }
+
+const root = './output/bootCamp.gif'
